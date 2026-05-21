@@ -85,6 +85,4 @@ stats and the allowlist, `chrome.storage.session` for live per-tab
 counters. Nothing is sent anywhere. The "Export report (JSON)" button
 on the dashboard lets you take your data with you.
 
-## License
-
 Yours. Modify freely.
