@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Veil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <div class="brand">
+      <span class="brand-mark">▲</span>
+      <span class="brand-name">VEIL</span>
+    </div>
+    <button id="open-dash" class="ghost" title="Open dashboard">⤢</button>
+  </header>
+
+  <section class="host">
+    <div class="host-label">Current site</div>
+    <div class="host-name" id="host">…</div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-num" id="blocked-num">—</div>
+      <div class="stat-label">blocked</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="fp-num">—</div>
+      <div class="stat-label">fingerprint pings</div>
+    </div>
+  </section>
+
+  <section class="breakdown" id="breakdown">
+    <!-- categories injected here -->
+  </section>
+
+  <section class="toggle-wrap">
+    <label class="toggle">
+      <input type="checkbox" id="allow-toggle" />
+      <span class="toggle-slot"><span class="toggle-knob"></span></span>
+      <span class="toggle-text">
+        <span class="toggle-title">Block on this site</span>
+        <span class="toggle-sub" id="toggle-sub">Allowlisting reloads the page</span>
+      </span>
+    </label>
+  </section>
+
+  <footer class="foot">
+    <span id="global-total">— lifetime blocks</span>
+    <button id="open-dash-2" class="link">full report →</button>
+  </footer>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

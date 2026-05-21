@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Veil — Privacy report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">▲</span>
+    <span class="wordmark">VEIL</span>
+    <span class="tag">surveillance audit · v0.1</span>
+  </div>
+  <nav class="topnav">
+    <a href="#overview">overview</a>
+    <a href="#categories">categories</a>
+    <a href="#sites">sites</a>
+    <a href="#trackers">trackers</a>
+    <a href="#allowlist">allowlist</a>
+  </nav>
+</header>
+
+<main>
+  <section id="overview" class="hero">
+    <div class="hero-eyebrow">
+      <span class="dot-live"></span>
+      monitoring active · <span id="install-age">—</span>
+    </div>
+    <h1 class="hero-title">
+      What the web tried to <em>learn</em> about you.
+    </h1>
+    <p class="hero-sub">
+      Every script that wanted to record your behavior, fingerprint your
+      device, or pipe your activity into someone's AI training pipeline —
+      and what was blocked.
+    </p>
+
+    <div class="hero-grid">
+      <div class="metric metric-lg">
+        <div class="metric-num" id="m-total">0</div>
+        <div class="metric-label">tracker requests blocked</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num cool" id="m-fp">0</div>
+        <div class="metric-label">fingerprint attempts seen</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num gold" id="m-sites">0</div>
+        <div class="metric-label">sites that profiled you</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num pink" id="m-trackers">0</div>
+        <div class="metric-label">distinct trackers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Categories ─────────────────────────────────── -->
+  <section id="categories" class="section">
+    <div class="section-head">
+      <h2><em>How</em> they tried to know you</h2>
+      <p>Trackers grouped by what they actually do.</p>
+    </div>
+    <div id="cat-list" class="cat-list">
+      <!-- categories injected -->
+    </div>
+  </section>
+
+  <!-- ── Top sites ─────────────────────────────────── -->
+  <section id="sites" class="section">
+    <div class="section-head">
+      <h2>The most <em>extractive</em> sites you visited</h2>
+      <p>Click any row to see exactly what each site tried to load.</p>
+    </div>
+    <div id="sites-list" class="sites-list"></div>
+  </section>
+
+  <!-- ── Top trackers ─────────────────────────────────── -->
+  <section id="trackers" class="section">
+    <div class="section-head">
+      <h2>The companies <em>watching</em> you most</h2>
+      <p>Leaderboard of trackers attempted across every site.</p>
+    </div>
+    <div id="trackers-list" class="trackers-list"></div>
+  </section>
+
+  <!-- ── Allowlist ─────────────────────────────────── -->
+  <section id="allowlist" class="section">
+    <div class="section-head">
+      <h2>Allowlisted sites</h2>
+      <p>Blocking is disabled on these — usually because the site broke without them.</p>
+    </div>
+    <div id="allowlist-list" class="allowlist-list"></div>
+  </section>
+
+  <!-- ── Tools ─────────────────────────────────── -->
+  <section class="section section-tools">
+    <div class="section-head">
+      <h2>Tools</h2>
+    </div>
+    <div class="tools">
+      <button id="export-btn" class="btn">Export report (JSON)</button>
+      <button id="reset-btn" class="btn btn-danger">Reset all data</button>
+    </div>
+    <p class="fineprint">
+      Veil only blocks <em>client-side</em> trackers — scripts that ship from
+      your browser. It does <em>not</em> block server-side AI crawlers like
+      GPTBot, ClaudeBot, CCBot or Google-Extended, which connect directly to
+      websites without going through you. Site operators have to block those
+      themselves via <code>robots.txt</code> or their CDN.
+    </p>
+  </section>
+</main>
+
+<footer class="bottom">
+  <span>VEIL · local-only · nothing leaves this browser</span>
+  <span>built for those who'd rather not be the dataset</span>
+</footer>
+
+<!-- ── Site detail drawer ───────────────────── -->
+<div id="drawer" class="drawer hidden">
+  <div class="drawer-card">
+    <button id="drawer-close" class="drawer-close">×</button>
+    <div class="drawer-eyebrow">site report</div>
+    <h3 id="drawer-host" class="drawer-host">—</h3>
+    <div id="drawer-meta" class="drawer-meta"></div>
+    <div id="drawer-body" class="drawer-body"></div>
+  </div>
+  <div class="drawer-scrim"></div>
+</div>
+
+<script src="dashboard.js" type="module"></script>
+</body>
+</html>
