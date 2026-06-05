@@ -12,6 +12,7 @@
 import { TRACKER_BY_ID, CATEGORIES } from "./data/trackers.js";
 
 const SCHEMA_VERSION = 1;
+const MAX_SITES = 500; // keep storage well under the 5 MB local quota
 
 // ────────────────────────────────────────────────────────────────
 // Cache (rehydrated on every SW wake-up)
@@ -53,6 +54,7 @@ function scheduleFlush() {
   flushTimer = setTimeout(async () => {
     flushTimer = null;
     if (!cache.ready) return;
+    pruneSites();
     try {
       await chrome.storage.local.set({
         stats_global: cache.stats_global,
@@ -62,6 +64,17 @@ function scheduleFlush() {
       console.warn("Veil: flush failed", e);
     }
   }, 600);
+}
+
+// Keep only the MAX_SITES most-recently-seen hosts so chrome.storage.local
+// never approaches its 5 MB quota during long-term use.
+function pruneSites() {
+  const hosts = Object.keys(cache.sites);
+  if (hosts.length <= MAX_SITES) return;
+  hosts
+    .sort((a, b) => (cache.sites[b].lastSeen || 0) - (cache.sites[a].lastSeen || 0))
+    .slice(MAX_SITES)
+    .forEach(h => { delete cache.sites[h]; });
 }
 
 // ────────────────────────────────────────────────────────────────
@@ -112,7 +125,21 @@ async function handleRuleMatch(info) {
   scheduleFlush();
 }
 
+// Per-tab promise chains: serializes concurrent storage.session writes to avoid
+// the read-modify-write race that otherwise loses counts under burst load.
+const tabWriteChain = new Map();
+
 async function bumpTabCounter(tabId, host, kind, category) {
+  const prev = tabWriteChain.get(tabId) || Promise.resolve();
+  const next = prev.then(() => doBumpTabCounter(tabId, host, kind, category))
+                   .catch(e => console.warn("Veil tab counter error", e));
+  tabWriteChain.set(tabId, next);
+  // Clean up the map when the chain settles so it doesn't grow forever
+  next.finally(() => { if (tabWriteChain.get(tabId) === next) tabWriteChain.delete(tabId); });
+  return next;
+}
+
+async function doBumpTabCounter(tabId, host, kind, category) {
   const key = `tab_${tabId}`;
   const cur = (await chrome.storage.session.get(key))[key]
             || { host, count: 0, fingerprint: 0, byCategory: {} };
