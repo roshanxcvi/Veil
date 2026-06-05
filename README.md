@@ -120,14 +120,6 @@ Then regenerate the block rules (see the script referenced in the in-extension R
 
 ---
 
-## Roadmap
-
-- [ ] Chrome Web Store release (swap `onRuleMatchedDebug` → `getMatchedRules()`)
-- [ ] Firefox port (MV3 with `browser.*` shims)
-- [ ] User-defined custom rules and per-category toggles
-- [ ] Community-maintained tracker list with auto-updates
-- [ ] Optional region packs (e.g. India-specific ad networks & brokers)
-
 ---
 
 ## Contributing
@@ -148,4 +140,4 @@ Veil is a transparency and privacy tool, not a security guarantee. It reduces cl
 
 ---
 
-<p align="center"><sub>Veil v1.0 · developed by <b>roshanxcvi</b> · built for those who'd rather not be the dataset</sub></p>
+<p align="center"><sub>Veil v1.1 · developed by <b>roshanxcvi</b> · built for those who'd rather not be the dataset</sub></p>
