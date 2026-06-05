@@ -16,11 +16,16 @@ async function init() {
   if (!DATA) return;
   render();
 
-  $("reset-btn").addEventListener("click", async () => {
-    if (!confirm("Reset all collected data? This cannot be undone.")) return;
-    await send({ type: "veil:resetAll" });
-    DATA = await send({ type: "veil:getDashboardData" });
-    render();
+  $("reset-btn").addEventListener("click", () => {
+    openConfirm(
+      "Reset all collected data?",
+      "This permanently clears every blocked-tracker and fingerprint record. It cannot be undone.",
+      async () => {
+        await send({ type: "veil:resetAll" });
+        DATA = await send({ type: "veil:getDashboardData" });
+        render();
+      }
+    );
   });
 
   $("export-btn").addEventListener("click", () => {
@@ -35,12 +40,60 @@ async function init() {
 
   $("drawer-close").addEventListener("click", closeDrawer);
   document.querySelector(".drawer-scrim").addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeDrawer(); closeConfirm(); } });
 
-  // refresh every 5s
-  setInterval(async () => {
-    DATA = await send({ type: "veil:getDashboardData" });
-    render();
-  }, 5000);
+  // Refresh every 5s, but only while the tab is actually visible — no point
+  // polling a backgrounded dashboard.
+  let pollTimer = null;
+  function startPolling() {
+    if (pollTimer) return;
+    pollTimer = setInterval(async () => {
+      DATA = await send({ type: "veil:getDashboardData" });
+      render();
+    }, 5000);
+  }
+  function stopPolling() { clearInterval(pollTimer); pollTimer = null; }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopPolling();
+    else { startPolling(); send({ type: "veil:getDashboardData" }).then(d => { DATA = d; render(); }); }
+  });
+  if (!document.hidden) startPolling();
+}
+
+// ── Confirm modal ────────────────────────────────────
+let confirmCb = null;
+function openConfirm(title, body, onConfirm) {
+  confirmCb = onConfirm;
+  let el = $("veil-confirm");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "veil-confirm";
+    el.className = "vc-scrim";
+    el.innerHTML = `
+      <div class="vc-card" role="dialog" aria-modal="true">
+        <h3 class="vc-title"></h3>
+        <p class="vc-body"></p>
+        <div class="vc-actions">
+          <button class="vc-cancel">Cancel</button>
+          <button class="vc-ok">Reset everything</button>
+        </div>
+      </div>`;
+    document.body.appendChild(el);
+    el.addEventListener("click", (e) => { if (e.target === el) closeConfirm(); });
+    el.querySelector(".vc-cancel").addEventListener("click", closeConfirm);
+    el.querySelector(".vc-ok").addEventListener("click", async () => {
+      const cb = confirmCb; closeConfirm();
+      if (cb) await cb();
+    });
+  }
+  el.querySelector(".vc-title").textContent = title;
+  el.querySelector(".vc-body").textContent = body;
+  el.classList.add("open");
+}
+function closeConfirm() {
+  confirmCb = null;
+  const el = $("veil-confirm");
+  if (el) el.classList.remove("open");
 }
 
 function render() {
@@ -97,14 +150,21 @@ function renderCategories() {
         </div>
         <div>
           <div class="cat-blurb">${meta.blurb}</div>
-          <div class="cat-bar-wrap" style="margin-top:14px">
-            <div class="cat-bar"><div class="cat-bar-fill" style="width:${pct}%; background: var(--${cssColorFor(key)})"></div></div>
+          <div class="cat-bar-wrap">
+            <div class="cat-bar"><div class="cat-bar-fill" data-pct="${pct}" data-color="${cssColorFor(key)}"></div></div>
           </div>
         </div>
         <div class="cat-num">${n.toLocaleString()}</div>
       </article>
     `;
   }).join("");
+
+  // Apply dynamic width/color via the CSSOM — the strict extension CSP
+  // (style-src 'self') blocks inline style="" attributes set through innerHTML.
+  wrap.querySelectorAll(".cat-bar-fill").forEach(el => {
+    el.style.width = `${el.dataset.pct}%`;
+    el.style.background = `var(--${el.dataset.color})`;
+  });
 }
 
 function cssColorFor(catKey) {
@@ -171,7 +231,7 @@ function renderTrackers() {
     <div class="tracker-row">
       <div class="tracker-name">
         ${escapeHtml(tracker.name)}
-        <span class="risk-pill ${tracker.risk}">${tracker.risk}</span>
+        <span class="risk-pill ${riskClass(tracker.risk)}">${escapeHtml(tracker.risk)}</span>
         <small>${escapeHtml(tracker.company)}</small>
       </div>
       <div class="tracker-why">${escapeHtml(tracker.why)}</div>
@@ -237,7 +297,7 @@ function openDrawer(host) {
       trackerRows.map(({tracker, count}) => `
         <div class="drawer-tracker">
           <div class="drawer-tracker-head">
-            <div class="drawer-tracker-name">${escapeHtml(tracker.name)} <span class="risk-pill ${tracker.risk}">${tracker.risk}</span></div>
+            <div class="drawer-tracker-name">${escapeHtml(tracker.name)} <span class="risk-pill ${riskClass(tracker.risk)}">${escapeHtml(tracker.risk)}</span></div>
             <div class="drawer-tracker-count">${count}×</div>
           </div>
           <div class="drawer-tracker-why">${escapeHtml(tracker.why)}</div>
@@ -293,7 +353,12 @@ function escapeHtml(s) {
 }
 function escapeAttr(s) { return escapeHtml(s).replace(/"/g, "&quot;"); }
 
+// Only ever emit a known risk class into the DOM. Anything unexpected
+// falls back to "low" so a malformed tracker entry can't inject markup.
+const RISK_CLASSES = new Set(["low", "medium", "high", "critical"]);
+function riskClass(r) { return RISK_CLASSES.has(r) ? r : "low"; }
+
 init().catch(e => {
   console.error(e);
-  document.body.innerHTML = `<pre style="color:#ef4444;padding:40px;font-family:JetBrains Mono,monospace">Dashboard error: ${escapeHtml(e.message)}</pre>`;
+  document.body.innerHTML = `<pre class="veil-fatal">Dashboard error: ${escapeHtml(e.message)}</pre>`;
 });
