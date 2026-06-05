@@ -3,7 +3,7 @@
 > Block the trackers that quietly profile you for marketing, behavioral analytics, identity graphs, and AI training — then see exactly what every website tried to collect.
 
 <p align="left">
-  <img alt="version" src="https://img.shields.io/badge/version-1.0-ef4444">
+  <img alt="version" src="https://img.shields.io/badge/version-1.1-ef4444">
   <img alt="manifest" src="https://img.shields.io/badge/Manifest-V3-111">
   <img alt="platform" src="https://img.shields.io/badge/Chrome-110%2B-444">
   <img alt="privacy" src="https://img.shields.io/badge/data%20leaves%20your%20browser-never-22c55e">
