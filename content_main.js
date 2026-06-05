@@ -19,8 +19,12 @@
   }
   function flush() {
     flushTimer = null;
+    // Target our own origin instead of "*" so no cross-origin frame can read
+    // these reports. "about:blank"/sandboxed docs have origin "null", which
+    // postMessage rejects as a targetOrigin, so fall back to "*" only there.
+    const target = (location.origin && location.origin !== "null") ? location.origin : "*";
     for (const api in buckets) {
-      window.postMessage({ [REPORT_KEY]: true, api, count: buckets[api] }, "*");
+      window.postMessage({ [REPORT_KEY]: true, api, count: buckets[api] }, target);
     }
     for (const k in buckets) delete buckets[k];
   }
