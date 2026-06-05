@@ -220,3 +220,19 @@ body {
   letter-spacing: 0.08em;
 }
 .link:hover { color: var(--ink); }
+
+.credit {
+  padding: 8px 16px 10px;
+  background: var(--bg);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+.credit-name {
+  color: var(--warn);
+  font-weight: 600;
+}
