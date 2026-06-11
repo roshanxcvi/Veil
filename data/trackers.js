@@ -137,7 +137,91 @@ export const TRACKERS = [
   { id: 122, name: "Drift",            company: "Salesloft",        category: "ai_chat",        risk: "medium",   domain: "drift.com",             why: "AI sales chatbot." },
   { id: 123, name: "Tidio",            company: "Tidio",            category: "ai_chat",        risk: "medium",   domain: "tidio.co",              why: "AI chatbot widget." },
   { id: 124, name: "Ada",              company: "Ada",              category: "ai_chat",        risk: "medium",   domain: "ada.support",           why: "Enterprise AI customer-service bot." },
-  { id: 125, name: "Crisp",            company: "Crisp",            category: "ai_chat",        risk: "low",      domain: "crisp.chat",            why: "Chat widget with AI assistant features." }
+  { id: 125, name: "Crisp",            company: "Crisp",            category: "ai_chat",        risk: "low",      domain: "crisp.chat",            why: "Chat widget with AI assistant features." },
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  ADVANCED PACK (v1.1) — broader coverage across every category.
+  //  Note: some fraud/identity vendors below double as access gates;
+  //  if a site misbehaves, allowlist it from the popup.
+  // ═══════════════════════════════════════════════════════════════════
+
+  // ─── Session replay (advanced) ─────────────────────────────────────
+  { id: 200, name: "Contentsquare",    company: "Contentsquare",    category: "session_replay", risk: "high",     domain: "contentsquare.net",     why: "Experience analytics that reconstructs full user journeys, sold explicitly to optimization and ML teams." },
+  { id: 201, name: "Decibel",          company: "Medallia",         category: "session_replay", risk: "high",     domain: "decibelinsight.net",    why: "Scores and replays user sessions to model frustration and intent." },
+  { id: 202, name: "VWO",              company: "Wingify",          category: "session_replay", risk: "medium",   domain: "visualwebsiteoptimizer.com", why: "A/B testing suite with heatmaps and session recordings." },
+  { id: 203, name: "Plerdy",           company: "Plerdy",           category: "session_replay", risk: "medium",   domain: "plerdy.com",            why: "Heatmaps and session replay tied to conversion tracking." },
+  { id: 204, name: "Sprig",            company: "Sprig",            category: "session_replay", risk: "medium",   domain: "sprig.com",             why: "In-product session capture and surveys feeding AI-summarized insights." },
+  { id: 205, name: "SessionCam",       company: "Contentsquare",    category: "session_replay", risk: "medium",   domain: "sessioncam.com",        why: "Records sessions and builds struggle/abandonment scores." },
+
+  // ─── AI / ML pipeline (advanced) ───────────────────────────────────
+  { id: 220, name: "Adobe Exp. Edge",  company: "Adobe",            category: "ai_pipeline",    risk: "high",     domain: "adobedc.net",           why: "Adobe Experience Platform edge — streams your activity into Adobe's profile graph and AI products." },
+  { id: 221, name: "BlueConic",        company: "BlueConic",        category: "ai_pipeline",    risk: "high",     domain: "blueconic.net",         why: "Customer Data Platform assembling a unified profile of you across visits." },
+  { id: 222, name: "Treasure Data",    company: "Treasure Data",    category: "ai_pipeline",    risk: "high",     domain: "treasuredata.com",      why: "Enterprise CDP routing behavioral data into warehouses and models." },
+  { id: 223, name: "Lytics",           company: "Lytics",           category: "ai_pipeline",    risk: "high",     domain: "lytics.io",             why: "CDP with built-in machine-learning audience scoring." },
+  { id: 224, name: "Freshpaint",       company: "Freshpaint",       category: "ai_pipeline",    risk: "high",     domain: "freshpaint.io",         why: "Auto-collects every event and fans it out to dozens of destinations." },
+  { id: 225, name: "Kissmetrics",      company: "Kissmetrics",      category: "ai_pipeline",    risk: "medium",   domain: "kissmetrics.io",        why: "Person-level behavioral analytics tied to a persistent identity." },
+
+  // ─── Fingerprinting / device-fraud (advanced) ──────────────────────
+  { id: 240, name: "Sift",             company: "Sift",             category: "fingerprint",    risk: "high",     domain: "siftscience.com",       why: "Fraud platform that fingerprints your device and scores your behavior." },
+  { id: 241, name: "Forter",           company: "Forter",           category: "fingerprint",    risk: "high",     domain: "forter.com",            why: "Identity and device fingerprinting for fraud decisions." },
+  { id: 242, name: "Riskified",        company: "Riskified",        category: "fingerprint",    risk: "high",     domain: "riskified.com",         why: "Collects device and behavioral signals to score transactions." },
+  { id: 243, name: "Signifyd",         company: "Signifyd",         category: "fingerprint",    risk: "medium",   domain: "signifyd.com",          why: "Device fingerprinting for commerce fraud protection." },
+  { id: 244, name: "DataDome",         company: "DataDome",         category: "fingerprint",    risk: "high",     domain: "datadome.co",           why: "Bot-detection that fingerprints every visitor; may gate site access." },
+  { id: 245, name: "HUMAN (PerimeterX)", company: "HUMAN",          category: "fingerprint",    risk: "high",     domain: "perimeterx.net",        why: "Bot/fraud defense that fingerprints the browser; may gate site access." },
+  { id: 246, name: "Arkose Labs",      company: "Arkose Labs",      category: "fingerprint",    risk: "medium",   domain: "arkoselabs.com",        why: "Device-risk fingerprinting behind many login challenges." },
+
+  // ─── Marketing automation pixels (advanced) ────────────────────────
+  { id: 260, name: "Snap Pixel",       company: "Snap",             category: "marketing",      risk: "high",     domain: "tr.snapchat.com",       why: "Reports your visit and conversions back to Snapchat Ads." },
+  { id: 261, name: "HubSpot",          company: "HubSpot",          category: "marketing",      risk: "medium",   domain: "hs-analytics.net",      why: "Tracks page views and forms, tying them to a marketing contact record." },
+  { id: 262, name: "Marketo",          company: "Adobe",            category: "marketing",      risk: "medium",   domain: "mktoresp.com",          why: "Munchkin tracking links your browsing to a lead profile." },
+  { id: 263, name: "Pardot",           company: "Salesforce",       category: "marketing",      risk: "medium",   domain: "pardot.com",            why: "B2B marketing tracking tied to your email identity." },
+  { id: 264, name: "Klaviyo",          company: "Klaviyo",          category: "marketing",      risk: "medium",   domain: "klaviyo.com",           why: "E-commerce tracking that links browsing to your email profile." },
+  { id: 265, name: "Mailchimp",        company: "Intuit",           category: "marketing",      risk: "medium",   domain: "list-manage.com",       why: "Email-marketing tracking of opens, clicks and site visits." },
+  { id: 266, name: "Reddit Pixel",     company: "Reddit",           category: "marketing",      risk: "medium",   domain: "pixel.reddit.com",      why: "Conversion pixel reporting your activity to Reddit Ads." },
+  { id: 267, name: "Bizible",          company: "Adobe",            category: "marketing",      risk: "medium",   domain: "bizible.com",           why: "Marketing-attribution tracking across your visits." },
+
+  // ─── Analytics & measurement (advanced) ────────────────────────────
+  { id: 280, name: "Comscore",         company: "Comscore",         category: "analytics",      risk: "high",     domain: "scorecardresearch.com", why: "Cross-site audience measurement building demographic profiles." },
+  { id: 281, name: "Quantcast",        company: "Quantcast",        category: "analytics",      risk: "high",     domain: "quantserve.com",        why: "Audience measurement and consent tool that profiles visitors for ads." },
+  { id: 282, name: "Chartbeat",        company: "Chartbeat",        category: "analytics",      risk: "medium",   domain: "chartbeat.com",         why: "Real-time engagement analytics for publishers." },
+  { id: 283, name: "Parse.ly",         company: "Automattic",       category: "analytics",      risk: "medium",   domain: "parsely.com",           why: "Content analytics tracking what you read and for how long." },
+  { id: 284, name: "New Relic Browser",company: "New Relic",        category: "analytics",      risk: "low",      domain: "nr-data.net",           why: "Real-user monitoring; performance telemetry tied to your session." },
+  { id: 285, name: "Cloudflare Insights",company: "Cloudflare",     category: "analytics",      risk: "low",      domain: "cloudflareinsights.com",why: "Lightweight web analytics; privacy-friendlier but still tracking." },
+  { id: 286, name: "Statcounter",      company: "Statcounter",      category: "analytics",      risk: "medium",   domain: "statcounter.com",       why: "Classic visitor analytics logging IP, referrer and path." },
+  { id: 287, name: "Optimizely",       company: "Optimizely",       category: "analytics",      risk: "medium",   domain: "optimizely.com",        why: "Experimentation platform that buckets and tracks you across tests." },
+  { id: 288, name: "Plausible",        company: "Plausible",        category: "analytics",      risk: "low",      domain: "plausible.io",          why: "Privacy-focused analytics — still counts your visit, but no cookies." },
+  { id: 289, name: "Fathom",           company: "Fathom",           category: "analytics",      risk: "low",      domain: "usefathom.com",         why: "Privacy-focused analytics; minimal data, still site-side tracking." },
+
+  // ─── Ad networks & exchanges (advanced) ────────────────────────────
+  { id: 300, name: "Amazon Ad System", company: "Amazon",           category: "ads",            risk: "high",     domain: "amazon-adsystem.com",   why: "Amazon's ad exchange and retargeting across the open web." },
+  { id: 301, name: "Index Exchange",   company: "Index Exchange",   category: "ads",            risk: "high",     domain: "casalemedia.com",       why: "Programmatic ad exchange that auctions your impression in real time." },
+  { id: 302, name: "Sharethrough",     company: "Sharethrough",     category: "ads",            risk: "medium",   domain: "sharethrough.com",      why: "Native-ad exchange and bidder." },
+  { id: 303, name: "Sovrn",            company: "Sovrn",            category: "ads",            risk: "medium",   domain: "lijit.com",             why: "Ad exchange and audience-data marketplace." },
+  { id: 304, name: "Equativ",          company: "Equativ",          category: "ads",            risk: "medium",   domain: "smartadserver.com",     why: "Ad server and supply-side platform." },
+  { id: 305, name: "Teads",            company: "Teads",            category: "ads",            risk: "medium",   domain: "teads.tv",              why: "Outstream video-ad platform that profiles viewers." },
+  { id: 306, name: "GumGum",           company: "GumGum",           category: "ads",            risk: "medium",   domain: "gumgum.com",            why: "Contextual ad platform with cross-site tracking." },
+  { id: 307, name: "Adform",           company: "Adform",           category: "ads",            risk: "high",     domain: "adform.net",            why: "Full-stack ad platform with identity and retargeting." },
+  { id: 308, name: "AdRoll",           company: "NextRoll",         category: "ads",            risk: "high",     domain: "adroll.com",            why: "Retargeting network that follows you across sites with ads." },
+  { id: 309, name: "Media.net",        company: "Media.net",        category: "ads",            risk: "medium",   domain: "media.net",             why: "Large contextual ad network (Yahoo/Bing supply)." },
+  { id: 310, name: "Yieldmo",          company: "Yieldmo",          category: "ads",            risk: "medium",   domain: "yieldmo.com",           why: "Ad exchange that fingerprints attention and interaction." },
+
+  // ─── Data brokers & identity graphs (advanced) ─────────────────────
+  { id: 330, name: "LiveIntent",       company: "LiveIntent",       category: "data_broker",    risk: "high",     domain: "liadm.com",             why: "Email-based identity graph linking you across newsletters and sites." },
+  { id: 331, name: "Tapad",            company: "Experian",         category: "data_broker",    risk: "high",     domain: "tapad.com",             why: "Cross-device identity graph tying your phone, laptop and TV together." },
+  { id: 332, name: "Neustar",          company: "TransUnion",       category: "data_broker",    risk: "high",     domain: "agkn.com",              why: "Identity and audience data resold for ad targeting." },
+  { id: 333, name: "Epsilon",          company: "Publicis",         category: "data_broker",    risk: "critical", domain: "epsilon.com",           why: "Major data broker matching online behavior to offline purchase records." },
+  { id: 334, name: "Zeotap",           company: "Zeotap",           category: "data_broker",    risk: "high",     domain: "zeotap.com",            why: "CDP and identity broker enriching your profile with third-party data." },
+  { id: 335, name: "Permutive",        company: "Permutive",        category: "data_broker",    risk: "medium",   domain: "permutive.app",         why: "Publisher audience platform that segments you for ad buyers." },
+  { id: 336, name: "33Across",         company: "33Across",         category: "data_broker",    risk: "high",     domain: "33across.com",          why: "Identity-resolution and addressability vendor syncing your IDs." },
+
+  // ─── AI chat / support widgets (advanced) ──────────────────────────
+  { id: 350, name: "Zendesk Chat",     company: "Zendesk",          category: "ai_chat",        risk: "low",      domain: "zopim.com",             why: "Support chat (Zopim) whose transcripts feed Zendesk AI." },
+  { id: 351, name: "LivePerson",       company: "LivePerson",       category: "ai_chat",        risk: "medium",   domain: "liveperson.net",        why: "Conversational-AI platform that stores and models chat data." },
+  { id: 352, name: "Freshchat",        company: "Freshworks",       category: "ai_chat",        risk: "low",      domain: "freshchat.com",         why: "Support chat widget with AI bot features." },
+  { id: 353, name: "Tawk.to",          company: "Tawk.to",          category: "ai_chat",        risk: "low",      domain: "tawk.to",               why: "Free live-chat widget that loads on countless sites." },
+  { id: 354, name: "Olark",            company: "Olark",            category: "ai_chat",        risk: "low",      domain: "olark.com",             why: "Live-chat widget with visitor tracking." },
+  { id: 355, name: "LiveChat",         company: "LiveChat",         category: "ai_chat",        risk: "low",      domain: "livechatinc.com",       why: "Live-chat widget with AI assist and visitor analytics." },
+  { id: 356, name: "Help Scout",       company: "Help Scout",       category: "ai_chat",        risk: "low",      domain: "helpscout.net",         why: "Support 'Beacon' widget that tracks visitors and chats." }
 ];
 
 // Convenience lookup tables
