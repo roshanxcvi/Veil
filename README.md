@@ -41,7 +41,7 @@ You agreed to none of this in a way you'd recognize as agreement. Veil's premise
 
 ## What Veil blocks
 
-Veil ships with a curated database of **76 named trackers** across **8 categories**, each tagged with a risk level (`critical` · `high` · `medium` · `low`) and a plain-English explanation.
+Veil ships with a curated database of **138 named trackers** across **8 categories**, each tagged with a risk level (`critical` · `high` · `medium` · `low`) and a plain-English explanation.
 
 | Category | What it does | Examples |
 |---|---|---|
@@ -117,8 +117,6 @@ Add an entry to `data/trackers.js`:
 ```
 
 Then regenerate the block rules (see the script referenced in the in-extension README) and reload the extension.
-
----
 
 ---
 
